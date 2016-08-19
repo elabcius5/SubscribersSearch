@@ -1,26 +1,45 @@
 package com.globant.tutoria.subscriberssearch.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by juan.herrera@globant.com on 11/08/2016.
  */
 public class SubscribersModel {
 
+    @SerializedName("login")
     private String login;
+    @SerializedName("id")
     private String id;
+    @SerializedName("avatar_url")
     private String avataUrl;
+    @SerializedName("gravatar_id")
     private String gravatarId;
+    @SerializedName("url")
     private String url;
+    @SerializedName("html_url")
     private String htmlUrl;
+    @SerializedName("followers_url")
     private String followersUrl;
+    @SerializedName("following_url")
     private String followingUrl;
+    @SerializedName("gists_url")
     private String gistsUrl;
+    @SerializedName("starred_url")
     private String starredUrl;
+    @SerializedName("subscriptions_url")
     private String subscriptionsUrl;
+    @SerializedName("organizations_url")
     private String organizationsUrl;
+    @SerializedName("repos_url")
     private String reposUrl;
+    @SerializedName("events_url")
     private String eventsUrl;
+    @SerializedName("received_events_url")
     private String receivedEventsUrl;
+    @SerializedName("type")
     private String type;
+    @SerializedName("site_admin")
     private boolean siteAdmin;
 
     public String getLogin() {
