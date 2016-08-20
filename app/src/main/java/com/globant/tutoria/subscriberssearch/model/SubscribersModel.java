@@ -7,36 +7,36 @@ import com.google.gson.annotations.SerializedName;
  */
 public final class SubscribersModel {
 
-    final String login;
-    final String id;
+    private final String login;
+    private final String id;
     @SerializedName("avatar_url")
-    final String avataUrl;
+    private final String avataUrl;
     @SerializedName("gravatar_id")
-    final String gravatarId;
-    final String url;
+    private final String gravatarId;
+    private final String url;
     @SerializedName("html_url")
-    final String htmlUrl;
+    private final String htmlUrl;
     @SerializedName("followers_url")
-    final String followersUrl;
+    private final String followersUrl;
     @SerializedName("following_url")
-    final String followingUrl;
+    private final String followingUrl;
     @SerializedName("gists_url")
-    final String gistsUrl;
+    private final String gistsUrl;
     @SerializedName("starred_url")
-    final String starredUrl;
+    private final String starredUrl;
     @SerializedName("subscriptions_url")
-    final String subscriptionsUrl;
+    private final String subscriptionsUrl;
     @SerializedName("organizations_url")
-    final String organizationsUrl;
+    private final String organizationsUrl;
     @SerializedName("repos_url")
-    final String reposUrl;
+    private final String reposUrl;
     @SerializedName("events_url")
-    final String eventsUrl;
+    private final String eventsUrl;
     @SerializedName("received_events_url")
-    final String receivedEventsUrl;
-    final String type;
+    private final String receivedEventsUrl;
+    private final String type;
     @SerializedName("site_admin")
-    final boolean siteAdmin;
+    private final boolean siteAdmin;
 
     public SubscribersModel(String login, String id, String avataUrl, String gravatarId, String url,
                             String htmlUrl, String followersUrl, String followingUrl,
