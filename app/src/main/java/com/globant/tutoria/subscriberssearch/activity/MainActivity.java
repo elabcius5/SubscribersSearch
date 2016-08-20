@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         OctokitInterface octokitInterface = RetrofitClient.getClient().create(OctokitInterface.class);
         Call<List<SubscribersModel>> callService = octokitInterface.getSubscribers();
         callService.enqueue(new Callback<List<SubscribersModel>>() {
@@ -33,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<List<SubscribersModel>> call, Response<List<SubscribersModel>> response) {
                 List<SubscribersModel> listSubscribers = response.body();
                 for(SubscribersModel subscribersModel : listSubscribers){
-                    Log.d("onResponse getLogin() ", subscribersModel.getLogin());
+                    Log.d("onResponse login() ", subscribersModel.getLogin());
+                    Log.d("onResponse avataUrl() ", subscribersModel.getAvataUrl());
                 }
             }
 

@@ -5,176 +5,128 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by juan.herrera@globant.com on 11/08/2016.
  */
-public class SubscribersModel {
+public final class SubscribersModel {
 
-    @SerializedName("login")
-    private String login;
-    @SerializedName("id")
-    private String id;
+    final String login;
+    final String id;
     @SerializedName("avatar_url")
-    private String avataUrl;
+    final String avataUrl;
     @SerializedName("gravatar_id")
-    private String gravatarId;
-    @SerializedName("url")
-    private String url;
+    final String gravatarId;
+    final String url;
     @SerializedName("html_url")
-    private String htmlUrl;
+    final String htmlUrl;
     @SerializedName("followers_url")
-    private String followersUrl;
+    final String followersUrl;
     @SerializedName("following_url")
-    private String followingUrl;
+    final String followingUrl;
     @SerializedName("gists_url")
-    private String gistsUrl;
+    final String gistsUrl;
     @SerializedName("starred_url")
-    private String starredUrl;
+    final String starredUrl;
     @SerializedName("subscriptions_url")
-    private String subscriptionsUrl;
+    final String subscriptionsUrl;
     @SerializedName("organizations_url")
-    private String organizationsUrl;
+    final String organizationsUrl;
     @SerializedName("repos_url")
-    private String reposUrl;
+    final String reposUrl;
     @SerializedName("events_url")
-    private String eventsUrl;
+    final String eventsUrl;
     @SerializedName("received_events_url")
-    private String receivedEventsUrl;
-    @SerializedName("type")
-    private String type;
+    final String receivedEventsUrl;
+    final String type;
     @SerializedName("site_admin")
-    private boolean siteAdmin;
+    final boolean siteAdmin;
+
+    public SubscribersModel(String login, String id, String avataUrl, String gravatarId, String url,
+                            String htmlUrl, String followersUrl, String followingUrl,
+                            String gistsUrl, String starredUrl, String subscriptionsUrl,
+                            String organizationsUrl, String reposUrl, String eventsUrl,
+                            String receivedEventsUrl, String type, boolean siteAdmin) {
+        this.login = login;
+        this.id = id;
+        this.avataUrl = avataUrl;
+        this.gravatarId = gravatarId;
+        this.url = url;
+        this.htmlUrl = htmlUrl;
+        this.followersUrl = followersUrl;
+        this.followingUrl = followingUrl;
+        this.gistsUrl = gistsUrl;
+        this.starredUrl = starredUrl;
+        this.subscriptionsUrl = subscriptionsUrl;
+        this.organizationsUrl = organizationsUrl;
+        this.reposUrl = reposUrl;
+        this.eventsUrl = eventsUrl;
+        this.receivedEventsUrl = receivedEventsUrl;
+        this.type = type;
+        this.siteAdmin = siteAdmin;
+    }
 
     public String getLogin() {
         return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
     }
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getAvataUrl() {
         return avataUrl;
-    }
-
-    public void setAvataUrl(String avataUrl) {
-        this.avataUrl = avataUrl;
     }
 
     public String getGravatarId() {
         return gravatarId;
     }
 
-    public void setGravatarId(String gravatarId) {
-        this.gravatarId = gravatarId;
-    }
-
     public String getUrl() {
         return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public String getHtmlUrl() {
         return htmlUrl;
     }
 
-    public void setHtmlUrl(String htmlUrl) {
-        this.htmlUrl = htmlUrl;
-    }
-
     public String getFollowersUrl() {
         return followersUrl;
-    }
-
-    public void setFollowersUrl(String followersUrl) {
-        this.followersUrl = followersUrl;
     }
 
     public String getFollowingUrl() {
         return followingUrl;
     }
 
-    public void setFollowingUrl(String followingUrl) {
-        this.followingUrl = followingUrl;
-    }
-
     public String getGistsUrl() {
         return gistsUrl;
-    }
-
-    public void setGistsUrl(String gistsUrl) {
-        this.gistsUrl = gistsUrl;
     }
 
     public String getStarredUrl() {
         return starredUrl;
     }
 
-    public void setStarredUrl(String starredUrl) {
-        this.starredUrl = starredUrl;
-    }
-
     public String getSubscriptionsUrl() {
         return subscriptionsUrl;
-    }
-
-    public void setSubscriptionsUrl(String subscriptionsUrl) {
-        this.subscriptionsUrl = subscriptionsUrl;
     }
 
     public String getOrganizationsUrl() {
         return organizationsUrl;
     }
 
-    public void setOrganizationsUrl(String organizationsUrl) {
-        this.organizationsUrl = organizationsUrl;
-    }
-
     public String getReposUrl() {
         return reposUrl;
-    }
-
-    public void setReposUrl(String reposUrl) {
-        this.reposUrl = reposUrl;
     }
 
     public String getEventsUrl() {
         return eventsUrl;
     }
 
-    public void setEventsUrl(String eventsUrl) {
-        this.eventsUrl = eventsUrl;
-    }
-
     public String getReceivedEventsUrl() {
         return receivedEventsUrl;
-    }
-
-    public void setReceivedEventsUrl(String receivedEventsUrl) {
-        this.receivedEventsUrl = receivedEventsUrl;
     }
 
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public boolean isSiteAdmin() {
         return siteAdmin;
-    }
-
-    public void setSiteAdmin(boolean siteAdmin) {
-        this.siteAdmin = siteAdmin;
     }
 }
