@@ -62,7 +62,7 @@ public class RecyclerViewFragment extends Fragment {
             @Override
             public void onResponse(Call<List<SubscribersModel>> call, Response<List<SubscribersModel>> response) {
                 List<SubscribersModel> listSubscribers = response.body();
-                RecyclerView.Adapter adapter = new DataSubscribersAdapter(listSubscribers);
+                RecyclerView.Adapter adapter = new DataSubscribersAdapter(getActivity().getApplicationContext(), listSubscribers);
                 recyclerViewSubscribers.setAdapter(adapter);
             }
             @Override
