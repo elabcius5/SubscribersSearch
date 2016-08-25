@@ -16,8 +16,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.globant.tutoria.subscriberssearch.R;
-import com.globant.tutoria.subscriberssearch.activity.MainActivity;
-import com.globant.tutoria.subscriberssearch.dataAdapter.DataSubscribersAdapter;
+import com.globant.tutoria.subscriberssearch.dataAdapter.SubscribersAdapter;
 import com.globant.tutoria.subscriberssearch.model.SubscribersModel;
 import com.globant.tutoria.subscriberssearch.rest.OctokitInterface;
 import com.globant.tutoria.subscriberssearch.rest.RetrofitClient;
@@ -31,14 +30,10 @@ import retrofit2.Response;
 /**
  * Created by juan.herrera@globant.com on 20/08/2016.
  */
-public class RecyclerViewFragment extends Fragment {
+public class SubscriberListFragment extends Fragment {
 
     private static final String TAG = "RecyclerViewFragmentSubscribers";
-    private static final String KEY_LAYOUT_MANAGER = "layoutManager";
-    private static final int SPAN_COUNT = 2;
-    protected LayoutManagerType mCurrentLayoutManagerType;
     protected RecyclerView recyclerViewSubscribers;
-    protected RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -51,10 +46,6 @@ public class RecyclerViewFragment extends Fragment {
         }
     }
 
-    private enum LayoutManagerType {
-        GRID_LAYOUT_MANAGER,
-        LINEAR_LAYOUT_MANAGER
-    }
     ProgressDialog progressDialog;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,23 +60,16 @@ public class RecyclerViewFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.recycler_view_fragment, container, false);
         rootView.setTag(TAG);
         recyclerViewSubscribers = (RecyclerView) rootView.findViewById(R.id.recycler_view_subscribers);
-        mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
-        if (savedInstanceState != null) {
-            // Restore saved layout manager type.
-            mCurrentLayoutManagerType = (LayoutManagerType) savedInstanceState
-                    .getSerializable(KEY_LAYOUT_MANAGER);
-        }
-
         progressDialog.show();
         progressDialog.setMessage("Loading subscribers");
-        setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
+        recyclerViewSubscribers.setLayoutManager(new LinearLayoutManager(getActivity()));
         OctokitInterface octokitInterface = RetrofitClient.getClient().create(OctokitInterface.class);
         Call<List<SubscribersModel>> callService = octokitInterface.getSubscribers();
         callService.enqueue(new Callback<List<SubscribersModel>>() {
             @Override
             public void onResponse(Call<List<SubscribersModel>> call, Response<List<SubscribersModel>> response) {
                 List<SubscribersModel> listSubscribers = response.body();
-                RecyclerView.Adapter adapter = new DataSubscribersAdapter(getActivity().getApplicationContext(), listSubscribers);
+                RecyclerView.Adapter adapter = new SubscribersAdapter(getActivity().getApplicationContext(), listSubscribers);
                 recyclerViewSubscribers.setAdapter(adapter);
                 progressDialog.hide();
             }
@@ -96,28 +80,5 @@ public class RecyclerViewFragment extends Fragment {
         });
 
         return rootView;
-    }
-
-    public void setRecyclerViewLayoutManager(LayoutManagerType layoutManagerType) {
-        int scrollPosition = 0;
-        if (recyclerViewSubscribers.getLayoutManager() != null) {
-            scrollPosition = ((LinearLayoutManager) recyclerViewSubscribers.getLayoutManager())
-                    .findFirstCompletelyVisibleItemPosition();
-        }
-        switch (layoutManagerType) {
-            case GRID_LAYOUT_MANAGER:
-                mLayoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT);
-                mCurrentLayoutManagerType = LayoutManagerType.GRID_LAYOUT_MANAGER;
-                break;
-            case LINEAR_LAYOUT_MANAGER:
-                mLayoutManager = new LinearLayoutManager(getActivity());
-                mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
-                break;
-            default:
-                mLayoutManager = new LinearLayoutManager(getActivity());
-                mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
-        }
-        recyclerViewSubscribers.setLayoutManager(mLayoutManager);
-        recyclerViewSubscribers.scrollToPosition(scrollPosition);
     }
 }

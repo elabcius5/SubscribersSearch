@@ -17,13 +17,13 @@ import java.util.List;
 /**
  * Created by juan.herrera@globant.com on 20/08/2016.
  */
-public class DataSubscribersAdapter extends RecyclerView.Adapter<DataSubscribersAdapter.ViewHolder> {
+public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.ViewHolder> {
 
     private static final int WIDTH_IMG_AVATAR = 80;
     private static final int HEIGHT_IMG_AVATAR = 80;
     private List<SubscribersModel> listSubscribers;
     private Context context;
-    public DataSubscribersAdapter (Context context, List<SubscribersModel> listSubscribers){
+    public SubscribersAdapter (Context context, List<SubscribersModel> listSubscribers){
         this.listSubscribers = listSubscribers;
         this.context = context;
     }
@@ -40,13 +40,13 @@ public class DataSubscribersAdapter extends RecyclerView.Adapter<DataSubscribers
     }
 
     @Override
-    public DataSubscribersAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public SubscribersAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_subscriber, viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(DataSubscribersAdapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(SubscribersAdapter.ViewHolder viewHolder, int position) {
         viewHolder.txtSingleSubscriber.setText(this.listSubscribers.get(position).getLogin());
         Picasso.with(this.context).load(this.listSubscribers.get(position).getAvataUrl()).resize(WIDTH_IMG_AVATAR, HEIGHT_IMG_AVATAR).into(viewHolder.imgAvatarSubscriber);
     }
