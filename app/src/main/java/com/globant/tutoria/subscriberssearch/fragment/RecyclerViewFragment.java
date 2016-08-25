@@ -1,16 +1,22 @@
 package com.globant.tutoria.subscriberssearch.fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.globant.tutoria.subscriberssearch.R;
+import com.globant.tutoria.subscriberssearch.activity.MainActivity;
 import com.globant.tutoria.subscriberssearch.dataAdapter.DataSubscribersAdapter;
 import com.globant.tutoria.subscriberssearch.model.SubscribersModel;
 import com.globant.tutoria.subscriberssearch.rest.OctokitInterface;
@@ -33,14 +39,28 @@ public class RecyclerViewFragment extends Fragment {
     protected LayoutManagerType mCurrentLayoutManagerType;
     protected RecyclerView recyclerViewSubscribers;
     protected RecyclerView.LayoutManager mLayoutManager;
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_toggle_log:
+                Log.e("menu", "CLICK");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     private enum LayoutManagerType {
         GRID_LAYOUT_MANAGER,
         LINEAR_LAYOUT_MANAGER
     }
-
+    ProgressDialog progressDialog;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        progressDialog = new ProgressDialog(getActivity());
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -55,6 +75,9 @@ public class RecyclerViewFragment extends Fragment {
             mCurrentLayoutManagerType = (LayoutManagerType) savedInstanceState
                     .getSerializable(KEY_LAYOUT_MANAGER);
         }
+
+        progressDialog.show();
+        progressDialog.setMessage("Loading subscribers");
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
         OctokitInterface octokitInterface = RetrofitClient.getClient().create(OctokitInterface.class);
         Call<List<SubscribersModel>> callService = octokitInterface.getSubscribers();
@@ -64,12 +87,14 @@ public class RecyclerViewFragment extends Fragment {
                 List<SubscribersModel> listSubscribers = response.body();
                 RecyclerView.Adapter adapter = new DataSubscribersAdapter(getActivity().getApplicationContext(), listSubscribers);
                 recyclerViewSubscribers.setAdapter(adapter);
+                progressDialog.hide();
             }
             @Override
             public void onFailure(Call<List<SubscribersModel>> call, Throwable t) {
                 Log.e("onFailure", t.getMessage());
             }
         });
+
         return rootView;
     }
 
