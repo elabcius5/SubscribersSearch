@@ -1,4 +1,4 @@
-package com.globant.tutoria.subscriberssearch.model;
+package com.globant.tutoria.subscriberssearch.api.model;
 
 import com.google.gson.annotations.SerializedName;
 

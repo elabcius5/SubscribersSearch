@@ -1,4 +1,4 @@
-package com.globant.tutoria.subscriberssearch.dataAdapter;
+package com.globant.tutoria.subscriberssearch.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,9 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.globant.tutoria.subscriberssearch.R;
-import com.globant.tutoria.subscriberssearch.model.SubscribersModel;
+import com.globant.tutoria.subscriberssearch.api.model.SubscribersModel;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,11 +22,18 @@ public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.
 
     private static final int WIDTH_IMG_AVATAR = 80;
     private static final int HEIGHT_IMG_AVATAR = 80;
-    private List<SubscribersModel> listSubscribers;
+    private List<SubscribersModel> subscribersModelList;
     private Context context;
-    public SubscribersAdapter (Context context, List<SubscribersModel> listSubscribers){
-        this.listSubscribers = listSubscribers;
+
+    public SubscribersAdapter(Context context){
+        this.subscribersModelList = new ArrayList<>();
         this.context = context;
+    }
+
+    public void setItems(List<SubscribersModel> subscribersModelList){
+        this.subscribersModelList.clear();
+        this.subscribersModelList.addAll(subscribersModelList);
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -47,12 +55,12 @@ public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.
 
     @Override
     public void onBindViewHolder(SubscribersAdapter.ViewHolder viewHolder, int position) {
-        viewHolder.txtSingleSubscriber.setText(this.listSubscribers.get(position).getLogin());
-        Picasso.with(this.context).load(this.listSubscribers.get(position).getAvataUrl()).resize(WIDTH_IMG_AVATAR, HEIGHT_IMG_AVATAR).into(viewHolder.imgAvatarSubscriber);
+        viewHolder.txtSingleSubscriber.setText(this.subscribersModelList.get(position).getLogin());
+        Picasso.with(this.context).load(this.subscribersModelList.get(position).getAvataUrl()).resize(WIDTH_IMG_AVATAR, HEIGHT_IMG_AVATAR).into(viewHolder.imgAvatarSubscriber);
     }
 
     @Override
     public int getItemCount() {
-        return this.listSubscribers.size();
+        return this.subscribersModelList.size();
     }
 }
