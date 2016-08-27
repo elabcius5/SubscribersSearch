@@ -25,7 +25,7 @@ public class SubscribersManager {
         this.sSubscribersClient = SubscribersClient.getInstance();
     }
 
-    public void onGetSubscribersEvent(){
+    public void getSubscribers(){
         sSubscribersClient.getSubscribersService().getSubscribers().enqueue(new Callback<List<SubscribersModel>>() {
             @Override
             public void onResponse(Call<List<SubscribersModel>> call, Response<List<SubscribersModel>> response) {

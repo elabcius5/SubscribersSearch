@@ -43,6 +43,4 @@ public class SubscribersClient {
     public SubscribersInterface getSubscribersService() {
         return subscribersInterface;
     }
-
-
 }
