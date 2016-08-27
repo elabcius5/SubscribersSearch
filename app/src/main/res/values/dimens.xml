@@ -10,5 +10,8 @@
     <dimen name="relative_layout_margin">20dp</dimen>
     <dimen name="image_view_layout">80dp</dimen>
     <dimen name="image_view_margin">20dp</dimen>
+    <dimen name="image_view_details_layout">150dp</dimen>
+    <dimen name="text_view_details_text_size">25sp</dimen>
+    <dimen name="text_view_details_layout">10dp</dimen>
     <dimen name="text_view_margin">10dp</dimen>
 </resources>

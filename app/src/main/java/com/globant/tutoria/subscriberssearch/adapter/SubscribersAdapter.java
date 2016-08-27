@@ -1,6 +1,7 @@
 package com.globant.tutoria.subscriberssearch.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.globant.tutoria.subscriberssearch.R;
+import com.globant.tutoria.subscriberssearch.activities.DetailsActivity;
 import com.globant.tutoria.subscriberssearch.api.model.SubscribersModel;
 import com.squareup.picasso.Picasso;
 
@@ -36,21 +38,37 @@ public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView txtSingleSubscriber;
         private ImageView imgAvatarSubscriber;
+        private Context context;
+        private List<SubscribersModel> subscribersModelList;
 
-        public ViewHolder(View view) {
+        public ViewHolder(View view, Context context, List<SubscribersModel> subscribersModelList) {
             super(view);
-            txtSingleSubscriber = (TextView) view.findViewById(R.id.single_subscriber);
-            imgAvatarSubscriber = (ImageView)view.findViewById(R.id.img_avatar_subscriber);
+            this.context = context;
+            this.subscribersModelList = subscribersModelList;
+            view.setOnClickListener(this);
+            this.txtSingleSubscriber = (TextView) view.findViewById(R.id.single_subscriber);
+            this.imgAvatarSubscriber = (ImageView)view.findViewById(R.id.img_avatar_subscriber);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            SubscribersModel subscribersModel = this.subscribersModelList.get(position);
+            Intent intent = new Intent(this.context, DetailsActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("txtLogin", subscribersModel.getLogin());
+            intent.putExtra("urlImage", subscribersModel.getAvataUrl());
+            this.context.startActivity(intent);
         }
     }
 
     @Override
     public SubscribersAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.row_subscriber, viewGroup, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, this.context, this.subscribersModelList);
     }
 
     @Override

@@ -3,11 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".activities.MainActivity">
+    tools:context=".activities.DetailsActivity">
 
     <FrameLayout
-        android:id="@+id/container_subscribers_list"
+        android:id="@+id/container_details"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </LinearLayout>
