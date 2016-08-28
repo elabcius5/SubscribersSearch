@@ -1,6 +1,5 @@
 package com.globant.tutoria.subscriberssearch.fragments;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,23 +11,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.globant.tutoria.subscriberssearch.R;
-import com.globant.tutoria.subscriberssearch.bus.BusProvider;
 import com.globant.tutoria.subscriberssearch.adapter.SubscribersAdapter;
-import com.globant.tutoria.subscriberssearch.events.SendSubscribersEvent;
+import com.globant.tutoria.subscriberssearch.api.model.SubscribersModel;
 import com.globant.tutoria.subscriberssearch.manager.SubscribersManager;
-import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
+
+import java.util.List;
 
 /**
  * Created by juan.herrera@globant.com on 20/08/2016.
  */
-public class SubscriberListFragment extends Fragment {
+public class SubscriberListFragment extends Fragment implements SubscribersManager.SubscribersCallbackListener {
 
     private static final String TAG = "RecyclerViewFragmentSubscribers";
     protected RecyclerView recyclerViewSubscribers;
     private SubscribersAdapter subscribersAdapter;
-    private SubscribersManager mSubscribersManager;
-    private Bus mBus = BusProvider.getInstance();
+    private SubscribersManager subscribersManager;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -41,15 +38,13 @@ public class SubscriberListFragment extends Fragment {
         }
     }
 
-    ProgressDialog progressDialog;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        progressDialog = new ProgressDialog(getActivity());
         setHasOptionsMenu(true);
         subscribersAdapter = new SubscribersAdapter(getActivity().getApplicationContext());
-        mSubscribersManager = new SubscribersManager(mBus);
-        mSubscribersManager.getSubscribers();
+        subscribersManager = new SubscribersManager(SubscriberListFragment.this);
+        subscribersManager.getSubscribersList();
     }
 
     @Override
@@ -58,26 +53,18 @@ public class SubscriberListFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.subscribers_list_fragment, container, false);
         rootView.setTag(TAG);
         recyclerViewSubscribers = (RecyclerView) rootView.findViewById(R.id.recycler_view_subscribers);
-        progressDialog.setMessage("Loading subscribers");
         recyclerViewSubscribers.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewSubscribers.setAdapter(subscribersAdapter);
         return rootView;
     }
 
-    @Override public void onResume() {
-        super.onResume();
-        BusProvider.getInstance().register(this);
+    @Override
+    public void onFetchProgress(List<SubscribersModel> subscribersModelList) {
+        subscribersAdapter.setItems(subscribersModelList);
     }
 
-    @Override public void onPause() {
-        super.onPause();
-        BusProvider.getInstance().unregister(this);
-    }
-
-    @Subscribe
-    public void onSendSubscriberEvent(SendSubscribersEvent sendSubscribersEvent){
-        progressDialog.show();
-        subscribersAdapter.setItems(sendSubscribersEvent.getSubscribersModelList());
-        progressDialog.hide();
+    @Override
+    public void onFetchFailed(String errorMessage) {
+        Log.e("onFailure", errorMessage);
     }
 }
